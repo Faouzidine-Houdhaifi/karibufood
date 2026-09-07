@@ -12,7 +12,7 @@ const renderCart = () => {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     document.getElementById('cartCount').textContent = cart.length;
     document.getElementById('cartTotal').textContent = formatPrice(total);
-    items.innerHTML = cart.length ? cart.map((item, index) => `<div class="cart-item"><div><strong>${item.name}</strong><small>${formatPrice(item.price)}</small></div><button type="button" data-remove="${index}" aria-label="Supprimer ${item.name}"><i class="fa-solid fa-trash-can"></i></button></div>`).join('') : '<div class="empty-cart"><i class="fa-solid fa-basket-shopping"></i><p>Votre panier est vide.</p><small>Ajoutez un plat pour commencer.</small></div>';
+    items.innerHTML = cart.length ? cart.map((itemindex) => `<div class="cart-item"><div><strong>${item.name}</strong><small>${formatPrice(item.price)}</small></div><button type="button" data-remove="${index}" aria-label="Supprimer ${item.name}"><i class="fa-solid fa-trash-can"></i></button></div>`).join('') : '<div class="empty-cart"><i class="fa-solid fa-basket-shopping"></i><p>Votre panier est vide.</p><small>Ajoutez un plat pour commencer.</small></div>';
 };
 
 const setCartOpen = open => {
