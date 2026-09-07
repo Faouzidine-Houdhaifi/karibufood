@@ -77,7 +77,9 @@
  .food-image .new{background:var(--green)}
  .quick-add{position:absolute;right:12px;bottom:12px;background:#fff;color:var(--orange);border:0;width:32px;height:32px;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.15);transition:.2s}
  .quick-add:hover{background:var(--orange);color:#fff}
- .food-info{padding:16px 16px 0;display:flex;justify-content:space-between;gap:8px}
+ .food-info{padding:16px 16px 0;display:flex;justify-content:space-between;gap:8px;position:relative}
+ .food-info::before{content:'Fait maison';display:inline-block;position:absolute;top:0;left:16px;color:var(--green);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px}
+ .food-info>div{padding-top:13px}
  .food-info h3{font-family:'Playfair Display';font-size:17px;margin:0 0 6px}
  .food-info p{font-size:10px;color:var(--muted);line-height:1.4;margin:0;max-width:155px}
  .food-info>strong{color:var(--orange);font-size:13px;white-space:nowrap}
