@@ -104,6 +104,9 @@
  .footer-inner strong span{color:#f3a079}
  .footer-inner p,.footer-inner small,.footer-email{font-size:11px;color:#c9d0c1}
  .footer-email:hover,.footer-whatsapp:hover{color:#fff}
+ .footer-email i,.footer-whatsapp i{margin-right:6px}
+ .footer-email i{color:#f3a079}
+ .footer-whatsapp i{color:#78c98a}
  .footer-whatsapp{font-size:11px;color:#c9d0c1}
  .footer-inner small{margin-left:auto}
  .cart-drawer{position:fixed;z-index:10;right:0;top:0;height:100vh;width:min(410px,100%);background:var(--paper);padding:30px;transform:translateX(105%);transition:.3s;box-shadow:-10px 0 30px rgba(0,0,0,.1);display:flex;flex-direction:column}
