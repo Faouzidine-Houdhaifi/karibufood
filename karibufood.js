@@ -70,6 +70,7 @@ const initSupabase = async () => {
         );
 
         console.log('✅ Supabase connecté avec succès');
+        trackVisitor();
 
     } catch (error) {
 
@@ -805,6 +806,25 @@ document
 console.log(
     '🍽️ KaribuFood chargé.'
 );
+
+async function trackVisitor() {
+    const visitorCount = document.getElementById('visitorCount');
+    if (!supabaseClient || !visitorCount || sessionStorage.getItem('karibufood-visited')) return;
+
+    sessionStorage.setItem('karibufood-visited', 'true');
+    const { error: insertError } = await supabaseClient.from('visitors').insert({});
+    if (insertError) {
+        console.error('Impossible d’enregistrer la visite :', insertError);
+        visitorCount.textContent = '-';
+        return;
+    }
+
+    const { count, error: countError } = await supabaseClient
+        .from('visitors')
+        .select('*', { count: 'exact', head: true });
+
+    visitorCount.textContent = countError ? '-' : Number(count).toLocaleString('fr-FR');
+}
 
 const openingHours = document.querySelector('.info-option:nth-child(2) p');
 if (openingHours) {
