@@ -809,15 +809,17 @@ console.log(
 
 async function trackVisitor() {
     const visitorCount = document.getElementById('visitorCount');
-    if (!supabaseClient || !visitorCount || sessionStorage.getItem('karibufood-visited')) return;
+    if (!supabaseClient || sessionStorage.getItem('karibufood-visited')) return;
 
     sessionStorage.setItem('karibufood-visited', 'true');
     const { error: insertError } = await supabaseClient.from('visitors').insert({});
     if (insertError) {
         console.error('Impossible d’enregistrer la visite :', insertError);
-        visitorCount.textContent = '-';
+        if (visitorCount) visitorCount.textContent = '-';
         return;
     }
+
+    if (!visitorCount) return;
 
     const { count, error: countError } = await supabaseClient
         .from('visitors')

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaribuFood | Commandes</title>
+    <link rel="stylesheet" href="karibufood.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .orders-page{min-height:100vh;padding:55px 0}.orders-header{display:flex;justify-content:space-between;align-items:end;margin-bottom:30px}.orders-header h1{font-family:'Playfair Display',serif;font-size:48px;margin:0}.orders-header p{color:var(--muted);font-size:13px}.orders-actions{display:flex;gap:10px}.orders-actions button{border:1px solid var(--line);background:var(--paper);padding:11px 14px;border-radius:4px;font-size:12px}.orders-actions button:last-child{background:var(--orange);border-color:var(--orange);color:#fff}.orders-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:25px}.summary-card{background:var(--paper);border:1px solid var(--line);padding:20px}.summary-card small,.summary-card strong{display:block}.summary-card small{font-size:11px;color:var(--muted);margin-bottom:8px}.summary-card strong{font-family:'Playfair Display';font-size:26px;color:var(--orange)}.orders-list{display:grid;gap:15px}.order-card{background:var(--paper);border:1px solid var(--line);padding:20px}.order-top{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:15px}.order-top strong{font-size:14px}.order-top small{display:block;color:var(--muted);font-size:11px;margin-top:5px}.order-total{color:var(--orange);font-weight:700}.order-items{padding:15px 0;margin:0;list-style:none;color:var(--muted);font-size:12px;line-height:1.8}.order-status{font-size:10px;color:var(--green);background:#edf4e9;padding:5px 8px;border-radius:3px}.empty-orders{text-align:center;background:var(--paper);border:1px dashed var(--line);padding:70px 20px;color:var(--muted)}.empty-orders i{font-size:35px;color:#ddcfc0;margin-bottom:15px}@media(max-width:600px){.orders-header{display:block}.orders-header h1{font-size:38px}.orders-actions{margin-top:20px}.orders-summary{grid-template-columns:1fr}.order-top{display:block}.order-total{display:block;margin-top:12px}}
+        .orders-summary{grid-template-columns:repeat(4,1fr)}
+        @media(max-width:800px){.orders-summary{grid-template-columns:repeat(2,1fr)}}
+    </style>
+</head>
+<body>
+    <header class="site-header"><nav class="navbar container"><a class="brand" href="index.html"><img src="logo image/karibufood_logo_transparent.png" alt="KaribuFood"></a><a class="outline-button" href="index.html"><i class="fa-solid fa-arrow-left"></i> Retour au site</a></nav></header>
+    <main class="orders-page container"><div class="orders-header"><div><p class="eyebrow"><span></span> Espace administration</p><h1>Mes commandes</h1><p>Ton tableau de bord privé.</p></div><div class="orders-actions"><button id="refreshOrders" type="button"><i class="fa-solid fa-rotate"></i> Actualiser</button><button id="clearOrders" type="button"><i class="fa-solid fa-trash"></i> Effacer</button></div></div><div class="orders-summary"><div class="summary-card"><small>Commandes reçues</small><strong id="ordersCount">0</strong></div><div class="summary-card"><small>Chiffre d'affaires</small><strong id="ordersRevenue">0 FC</strong></div><div class="summary-card"><small>Dernière commande</small><strong id="lastOrder">-</strong></div><div class="summary-card"><small>Visiteurs</small><strong id="visitorTotal">...</strong></div></div><section class="orders-list" id="ordersList"></section></main>
+    <script src="karibufood-admin.js"></script>
+</body>
+</html>
