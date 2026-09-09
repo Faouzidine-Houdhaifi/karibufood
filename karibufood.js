@@ -292,7 +292,18 @@ const openPayment = () => {
 // 11. MODALE DES ACCOMPAGNEMENTS
 // ------------------------------------------------------------
 
-const dishModal = document.getElementById('dishModal');
+let dishModal = document.getElementById('dishModal');
+
+if (!dishModal) {
+    dishModal = document.createElement('section');
+    dishModal.className = 'dish-modal';
+    dishModal.id = 'dishModal';
+    dishModal.setAttribute('aria-hidden', 'true');
+    dishModal.setAttribute('aria-labelledby', 'dishModalTitle');
+    dishModal.innerHTML = `<div class="dish-modal-box"><button class="dish-modal-close" id="closeDishModal" type="button" aria-label="Fermer les accompagnements"><i class="fa-solid fa-xmark"></i></button><div class="dish-modal-head"><p class="eyebrow"><span></span> Personnalisez votre plat</p><h2 id="dishModalTitle">Nom du plat</h2></div><fieldset class="dish-modal-list" id="dishModalList"><legend>Choisissez vos accompagnements</legend></fieldset><button class="primary-button dish-modal-add" id="addDishToCart" type="button">Ajouter au panier <i class="fa-solid fa-basket-shopping"></i></button></div>`;
+    document.body.appendChild(dishModal);
+}
+
 const dishModalTitle = document.getElementById('dishModalTitle');
 const dishModalList = document.getElementById('dishModalList');
 let addDishToCart = document.getElementById('addDishToCart');
