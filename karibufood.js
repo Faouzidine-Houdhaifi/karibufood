@@ -846,6 +846,29 @@ document
 // 22. FILTRE DES CATÉGORIES
 // ------------------------------------------------------------
 
+const foodGrid = document.getElementById('foodGrid');
+
+const renderAccompanimentView = () => {
+    let view = document.getElementById('accompanimentView');
+
+    if (!view) {
+        view = document.createElement('section');
+        view.id = 'accompanimentView';
+        view.className = 'accompaniment-view';
+        foodGrid.insertAdjacentElement('afterend', view);
+    }
+
+    const dishes = [...document.querySelectorAll('.food-card[data-accompagnements]')];
+
+    view.innerHTML = `<div class="accompaniment-heading"><p class="eyebrow"><span></span> Avec votre plat</p><h3>Tous les accompagnements</h3><p>Choisissez les saveurs qui vont avec chaque plat.</p></div><div class="accompaniment-grid">${dishes.map(card => `<article class="accompaniment-card"><h4>${card.dataset.name}</h4><ul>${card.dataset.accompagnements.split('|').map(item => `<li>${item.trim()}</li>`).join('')}</ul></article>`).join('')}</div>`;
+    view.hidden = false;
+};
+
+const hideAccompanimentView = () => {
+    const view = document.getElementById('accompanimentView');
+    if (view) view.hidden = true;
+};
+
 document
     .querySelectorAll('.category')
     .forEach(button => {
@@ -870,6 +893,18 @@ document
                     'active'
                 );
 
+                const isAccompanimentCategory =
+                    button.dataset.category === 'accompagnements';
+
+                if (isAccompanimentCategory) {
+                    document
+                        .querySelectorAll('.food-card')
+                        .forEach(card => { card.hidden = true; });
+                    renderAccompanimentView();
+                    return;
+                }
+
+                hideAccompanimentView();
 
                 document
                     .querySelectorAll(
