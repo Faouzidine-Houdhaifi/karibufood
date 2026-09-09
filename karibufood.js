@@ -326,7 +326,7 @@ const openDishModal = card => {
 
     dishModalTitle.textContent = dishName;
     dishModalList.innerHTML = accompaniments
-        ? `<legend>Choisissez vos accompagnements</legend>${accompaniments.split('|').map((item, index) => `<label class="dish-choice"><input type="checkbox" value="${item.trim()}" checked><span>${item.trim()}</span></label>`).join('')}`
+        ? `<legend>Choisissez vos accompagnements</legend>${accompaniments.split('|').map(item => `<label class="dish-choice"><input type="checkbox" value="${item.trim()}"><span>${item.trim()}</span></label>`).join('')}`
         : '<legend>Choisissez vos accompagnements</legend><p class="dish-modal-empty">Aucun accompagnement renseigné.</p>';
 
     dishModal.classList.add('open');
