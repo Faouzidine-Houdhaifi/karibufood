@@ -71,7 +71,8 @@
  .food-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
  .food-card{background:var(--paper);border:1px solid #f0ebe1;padding-bottom:18px}
  .food-image{height:205px;position:relative;overflow:hidden}
- .food-image img{width:100%;height:100%;object-fit:cover;transition:.4s}
+ .food-image img{width:100%;height:100%;object-fit:cover;transition:.4s;cursor:pointer}
+ .food-card[data-accompagnements] .food-image::after{content:'Voir les accompagnements';position:absolute;left:12px;bottom:12px;background:rgba(28,31,24,.8);color:#fff;padding:6px 8px;border-radius:3px;font-size:9px;pointer-events:none}
  .food-card:hover .food-image img{transform:scale(1.06)}
  .food-image span{position:absolute;top:12px;left:12px;background:var(--orange);color:#fff;padding:5px 8px;border-radius:2px;font-size:9px;text-transform:uppercase;font-weight:700;letter-spacing:.5px}
  .food-image .new{background:var(--green)}
