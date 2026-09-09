@@ -14,6 +14,55 @@ const SUPABASE_KEY =
 
 let supabaseClient = null;
 
+const repairEncoding = value => {
+    return value
+        .replace(/Ã©/g, '\u00e9')
+        .replace(/Ã¨/g, '\u00e8')
+        .replace(/Ãª/g, '\u00ea')
+        .replace(/Ã /g, '\u00e0')
+        .replace(/Ã /g, '\u00e0')
+        .replace(/Ã¢/g, '\u00e2')
+        .replace(/Ã§/g, '\u00e7')
+        .replace(/Ã®/g, '\u00ee')
+        .replace(/Ã¯/g, '\u00ef')
+        .replace(/Ã´/g, '\u00f4')
+        .replace(/Ã»/g, '\u00fb')
+        .replace(/Ã¹/g, '\u00f9')
+        .replace(/Ã¼/g, '\u00fc')
+        .replace(/Ã‰/g, '\u00c9')
+        .replace(/Ã€/g, '\u00c0')
+        .replace(/Â©/g, '\u00a9')
+        .replace(/â˜…/g, '\u2605');
+};
+
+const repairPageEncoding = () => {
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT
+    );
+
+    let node;
+    while (node = walker.nextNode()) {
+        node.nodeValue = repairEncoding(node.nodeValue);
+    }
+
+    document
+        .querySelectorAll('[data-name], [data-accompagnements], [alt], [aria-label]')
+        .forEach(element => {
+            ['data-name', 'data-accompagnements', 'alt', 'aria-label']
+                .forEach(attribute => {
+                    if (element.hasAttribute(attribute)) {
+                        element.setAttribute(
+                            attribute,
+                            repairEncoding(element.getAttribute(attribute))
+                        );
+                    }
+                });
+        });
+};
+
+repairPageEncoding();
+
 
 // ------------------------------------------------------------
 // 2. CHARGEMENT DE SUPABASE
@@ -240,7 +289,69 @@ const openPayment = () => {
 
 
 // ------------------------------------------------------------
-// 11. FERMER LE PAIEMENT
+// 11. MODALE DES ACCOMPAGNEMENTS
+// ------------------------------------------------------------
+
+const dishModal = document.getElementById('dishModal');
+const dishModalTitle = document.getElementById('dishModalTitle');
+const dishModalList = document.getElementById('dishModalList');
+let addDishToCart = document.getElementById('addDishToCart');
+let selectedDishCard = null;
+
+const openDishModal = card => {
+    selectedDishCard = card;
+    const dishName = card.dataset.name;
+    const accompaniments = card.dataset.accompagnements || '';
+
+    if (!addDishToCart) {
+        addDishToCart = document.createElement('button');
+        addDishToCart.className = 'primary-button dish-modal-add';
+        addDishToCart.id = 'addDishToCart';
+        addDishToCart.type = 'button';
+        addDishToCart.innerHTML = 'Ajouter au panier <i class="fa-solid fa-basket-shopping"></i>';
+        dishModalList.insertAdjacentElement('afterend', addDishToCart);
+        addDishToCart.addEventListener('click', addSelectedDishToCart);
+    }
+
+    dishModalTitle.textContent = dishName;
+    dishModalList.innerHTML = accompaniments
+        ? `<legend>Choisissez vos accompagnements</legend>${accompaniments.split('|').map((item, index) => `<label class="dish-choice"><input type="checkbox" value="${item.trim()}" checked><span>${item.trim()}</span></label>`).join('')}`
+        : '<legend>Choisissez vos accompagnements</legend><p class="dish-modal-empty">Aucun accompagnement renseigné.</p>';
+
+    dishModal.classList.add('open');
+    dishModal.setAttribute('aria-hidden', 'false');
+};
+
+const addSelectedDishToCart = () => {
+    if (!selectedDishCard) return;
+
+    const selected = [...dishModalList.querySelectorAll('input:checked')]
+        .map(input => input.value);
+
+    const dishName = selectedDishCard.dataset.name;
+    const price = Number(selectedDishCard.dataset.price);
+    const accompaniments = selected.length
+        ? ` avec ${selected.join(', ')}`
+        : ' sans accompagnement';
+
+    cart.push({
+        name: `${dishName}${accompaniments}`,
+        price: price
+    });
+
+    renderCart();
+    closeDishModal();
+    setCartOpen(true);
+};
+
+const closeDishModal = () => {
+    dishModal.classList.remove('open');
+    dishModal.setAttribute('aria-hidden', 'true');
+};
+
+
+// ------------------------------------------------------------
+// 12. FERMER LE PAIEMENT
 // ------------------------------------------------------------
 
 const closePayment = () => {
@@ -255,7 +366,7 @@ const closePayment = () => {
 
 
 // ------------------------------------------------------------
-// 12. AJOUTER UN PRODUIT AU PANIER
+// 13. AJOUTER UN PRODUIT AU PANIER
 // ------------------------------------------------------------
 
 document
@@ -290,8 +401,38 @@ document
     });
 
 
+document
+    .querySelectorAll('.food-image img')
+    .forEach(image => {
+        image.addEventListener('click', event => {
+            const card = image.closest('.food-card');
+            if (!card || !card.dataset.accompagnements) return;
+
+            event.preventDefault();
+            openDishModal(card);
+        });
+    });
+
+
+const closeDishModalButton = document.getElementById('closeDishModal');
+
+if (closeDishModalButton) {
+    closeDishModalButton.addEventListener('click', closeDishModal);
+}
+
+
+if (addDishToCart) addDishToCart.addEventListener('click', addSelectedDishToCart);
+
+
+dishModal.addEventListener('click', event => {
+    if (event.target === dishModal) {
+        closeDishModal();
+    }
+});
+
+
 // ------------------------------------------------------------
-// 13. SUPPRIMER UN PRODUIT
+// 14. SUPPRIMER UN PRODUIT
 // ------------------------------------------------------------
 
 document
