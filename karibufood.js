@@ -321,7 +321,7 @@ const accompanimentPrices = {
         'Sauce fait maison': 500,
         Saucisse: 500
     },
-    'Poulet coco': { Poulet: 500, 'Riz parfumé': 500, Banane: 500, 'Manioc frit': 500 }
+    'Poulet coco': { Vermicelle: 500, 'Riz parfumé': 500, Banane: 500, 'Manioc frit': 500 }
 };
 
 const getAccompanimentPrice = (dishName, accompaniment) => {
