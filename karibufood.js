@@ -311,7 +311,7 @@ let selectedDishCard = null;
 
 const accompanimentPrices = {
     'Mafé de poulet': { Poulet: 500, Carotte: 0, Oignon: 0 },
-    'Brochettes braisées': { 'Salade verte': 0, Tomate: 0, Oignon: 0 },
+    'Brochettes braisées': { 'Riz parfumé': 500, 'Salade verte': 500, Tomate: 0, Oignon: 0 },
     Thieboudienne: { 'Viande de boeufs': 500, 'Poulet braisées': 500, Tomate: 0 },
     Pilawo: {
         'Poulet & antchari': 500,
