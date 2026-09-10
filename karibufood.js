@@ -309,6 +309,25 @@ const dishModalList = document.getElementById('dishModalList');
 let addDishToCart = document.getElementById('addDishToCart');
 let selectedDishCard = null;
 
+const accompanimentPrices = {
+    'Mafé de poulet': { Poulet: 500, Carotte: 0, Oignon: 0 },
+    'Brochettes braisées': { 'Salade verte': 0, Tomate: 0, Oignon: 0 },
+    Thieboudienne: { 'Viande de boeufs': 500, 'Poulet braisées': 500, Tomate: 0 },
+    Pilawo: {
+        'Poulet & antchari': 500,
+        'Viande tendre': 500,
+        Légumes: 250,
+        'Pois chiches': 0,
+        'Sauce fait maison': 500,
+        Saucisse: 500
+    },
+    'Poulet coco': { Poulet: 500, 'Riz parfumé': 500, Banane: 500, 'Manioc frit': 500 }
+};
+
+const getAccompanimentPrice = (dishName, accompaniment) => {
+    return accompanimentPrices[dishName]?.[accompaniment] ?? 250;
+};
+
 const openDishModal = card => {
     selectedDishCard = card;
     const dishName = card.dataset.name;
@@ -326,7 +345,7 @@ const openDishModal = card => {
 
     dishModalTitle.textContent = dishName;
     dishModalList.innerHTML = accompaniments
-        ? `<legend>Choisissez vos accompagnements</legend>${accompaniments.split('|').map(item => `<label class="dish-choice"><input type="checkbox" value="${item.trim()}"><span>${item.trim()}</span></label>`).join('')}`
+        ? `<legend>Choisissez vos accompagnements</legend>${accompaniments.split('|').map(item => { const accompaniment = item.trim(); const price = getAccompanimentPrice(dishName, accompaniment); return `<label class="dish-choice"><input type="checkbox" value="${accompaniment}"><span>${accompaniment}</span><small>${price ? `+${formatPrice(price)}` : 'Gratuit'}</small></label>`; }).join('')}`
         : '<legend>Choisissez vos accompagnements</legend><p class="dish-modal-empty">Aucun accompagnement renseigné.</p>';
 
     dishModal.classList.add('open');
@@ -340,7 +359,11 @@ const addSelectedDishToCart = () => {
         .map(input => input.value);
 
     const dishName = selectedDishCard.dataset.name;
-    const price = Number(selectedDishCard.dataset.price);
+    const basePrice = Number(selectedDishCard.dataset.price);
+    const price = basePrice + selected.reduce(
+        (total, accompaniment) => total + getAccompanimentPrice(dishName, accompaniment),
+        0
+    );
     const accompaniments = selected.length
         ? ` avec ${selected.join(', ')}`
         : ' sans accompagnement';
@@ -1017,5 +1040,5 @@ async function trackVisitor() {
 
 const openingHours = document.querySelector('.info-option:nth-child(2) p');
 if (openingHours) {
-    openingHours.innerHTML = 'Lundi - Vendredi : 10h00 - 22h00<br>Samedi : 10h00 - 14h00<br>Dimanche : fermé';
+    openingHours.innerHTML = 'Samedi - Jeudi : 10h00 - 22h00<br>Vendredi : fermé<br>Dimanche : 10h00 - 15h00';
 }
