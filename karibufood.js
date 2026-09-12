@@ -554,6 +554,48 @@ document
 // 19. CHOIX DE LA MÉTHODE DE PAIEMENT
 // ------------------------------------------------------------
 
+const mobilePaymentMethod =
+    document.querySelector(
+        '.payment-method[data-method="mobile"]'
+    );
+
+if (mobilePaymentMethod) {
+
+    mobilePaymentMethod.dataset.method = 'mvola';
+
+    const methodLabel =
+        mobilePaymentMethod.querySelector('span');
+
+    if (methodLabel) {
+        methodLabel.innerHTML =
+            'Mvola<small>Paiement mobile</small>';
+    }
+}
+
+const mobileFields =
+    document.getElementById('mobileFields');
+
+if (mobileFields && !mobileFields.querySelector('.mvola-recipient')) {
+
+    const recipient =
+        document.createElement('div');
+
+    recipient.className = 'mvola-recipient';
+    recipient.innerHTML =
+        '<strong>Envoyez le montant à</strong><span>+269 497 18 96</span><small>Après le transfert, indiquez le numéro Mvola utilisé ci-dessous.</small>';
+
+    mobileFields.prepend(recipient);
+}
+
+const mobileInput =
+    mobileFields?.querySelector('input');
+
+if (mobileInput) {
+    mobileInput.name = 'mobile_number';
+    mobileInput.parentElement.childNodes[0].textContent =
+        'Votre numéro Mvola';
+}
+
 document
     .querySelectorAll('.payment-method')
     .forEach(method => {
@@ -577,7 +619,7 @@ document
                     method.dataset.method === 'card';
 
                 const isMobile =
-                    method.dataset.method === 'mobile';
+                    method.dataset.method === 'mvola';
 
 
                 // Champs carte
