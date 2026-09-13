@@ -575,18 +575,6 @@ if (mobilePaymentMethod) {
 const mobileFields =
     document.getElementById('mobileFields');
 
-if (mobileFields && !mobileFields.querySelector('.mvola-recipient')) {
-
-    const recipient =
-        document.createElement('div');
-
-    recipient.className = 'mvola-recipient';
-    recipient.innerHTML =
-        '<strong>Envoyez le montant à</strong><span>+269 497 18 96</span><small>Après le transfert, indiquez le numéro Mvola utilisé ci-dessous.</small>';
-
-    mobileFields.prepend(recipient);
-}
-
 const mobileInput =
     mobileFields?.querySelector('input');
 
