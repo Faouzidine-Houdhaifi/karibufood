@@ -554,6 +554,8 @@ document
 // 19. CHOIX DE LA MÉTHODE DE PAIEMENT
 // ------------------------------------------------------------
 
+const mvolaRecipient = '+269 497 18 96';
+
 const mobilePaymentMethod =
     document.querySelector(
         '.payment-method[data-method="mobile"]'
@@ -574,6 +576,10 @@ if (mobilePaymentMethod) {
 
 const mobileFields =
     document.getElementById('mobileFields');
+
+if (mobileFields) {
+    mobileFields.dataset.recipient = mvolaRecipient;
+}
 
 const mobileInput =
     mobileFields?.querySelector('input');
