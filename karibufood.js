@@ -1028,6 +1028,30 @@ document
 // 24. MENU MOBILE
 // ------------------------------------------------------------
 
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('karibufood-theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+const setTheme = dark => {
+    document.body.classList.toggle('dark-theme', dark);
+    themeToggle.setAttribute('aria-pressed', String(dark));
+    themeToggle.setAttribute(
+        'aria-label',
+        dark ? 'Activer le mode clair' : 'Activer le mode sombre'
+    );
+    themeToggle.innerHTML = dark
+        ? '<i class="fa-solid fa-sun" aria-hidden="true"></i><span>Thème</span>'
+        : '<i class="fa-solid fa-moon" aria-hidden="true"></i><span>Thème</span>';
+};
+
+setTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
+
+themeToggle.addEventListener('click', () => {
+    const dark = !document.body.classList.contains('dark-theme');
+    setTheme(dark);
+    localStorage.setItem('karibufood-theme', dark ? 'dark' : 'light');
+});
+
 document
     .getElementById('menuToggle')
     .addEventListener(
