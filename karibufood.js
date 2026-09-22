@@ -1030,7 +1030,6 @@ document
 
 const themeToggle = document.getElementById('themeToggle');
 const savedTheme = localStorage.getItem('karibufood-theme');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 const setTheme = dark => {
     document.body.classList.toggle('dark-theme', dark);
@@ -1044,7 +1043,7 @@ const setTheme = dark => {
         : '<i class="fa-solid fa-moon" aria-hidden="true"></i><span>Thème</span>';
 };
 
-setTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
+setTheme(savedTheme === 'dark');
 
 themeToggle.addEventListener('click', () => {
     const dark = !document.body.classList.contains('dark-theme');
